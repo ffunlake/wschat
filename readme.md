@@ -61,7 +61,6 @@
    ./wschat client  --config path_to_config_file
    ```
 ## Websocket Client Commands
-
 The client supports the following commands:
 
 1. `/register <name>`
