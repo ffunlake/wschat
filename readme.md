@@ -42,10 +42,6 @@
      database:
        type: sqlite  # Database type
        path: data/wschat.db  # Database file path
-     deepseek:
-       api_key: ""   # Your DeepSeek API key
-       api_url: ""   # DeepSeek API endpoint
-     ```
 
 2. Start Server
    ```bash
@@ -106,28 +102,6 @@ The following HTTP REST API endpoints are available:
    - Returns JSON array of messages
 
 ## Directory Description
-.
-├── cmd
-│   ├── client.go
-│   ├── cobra.go
-│   └── server.go
-├── config
-│   ├── chat.yaml
-│   └── config.go
-├── data
-│   └── wschat.db
-├── docs
-│   └── requirement.md
-├── go.mod
-├── go.sum
-├── main.go
-├── pkg
-│   ├── database
-│   ├── orm
-│   └── services
-├── readme.md
-└── shell
-    └── install.sh
 - `cmd/`: Contains command-line interface code for server and client
 - `config/`: Configuration files and config loading logic
 - `data/`: Database files and data storage
