@@ -1,0 +1,41 @@
+# Server Configuration
+server:
+  host: "0.0.0.0"
+  port: 8080
+  read_timeout: 60 # seconds
+  write_timeout: 60 # seconds
+  idle_timeout: 120 # seconds
+
+# Client Configuration
+client:
+  websocket:
+    url: "ws://localhost:8080/chat"
+    read_buffer_size: 1024 # bytes
+    write_buffer_size: 1024 # bytes
+
+# database Configuration
+database:
+  type: "sqlite"
+  path: "./data/wschat.db"
+  max_idle_conns: 10  # 最大空闲连接数
+  max_open_conns: 100 # 最大打开连接数
+  conn_max_lifetime: 3600 # 连接最大生命周期（秒）
+
+# DeepSeek API Configuration
+deepseek:
+  api_key: "${DEEPSEEK_API_KEY}"
+  api_url: "https://api.deepseek.com/v1/chat/completions"
+  model: "deepseek-chat"
+  settings:
+    # < 0.3 means more accurate
+    # > 0.3. < 0.7 means balanced
+    # > 0.7 means more creative
+    temperature: 0.5
+    # limit the ai response tokens
+    max_tokens: 150
+  headers:
+    content_type: "application/json"
+    accept: "application/json"
+  timeout: 30 # seconds
+
+
