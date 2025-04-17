@@ -77,6 +77,7 @@ func (wsServeice *WsServeice) HandleMessage(conn *websocket.Conn, message string
 
 	case "/login":
 		_, ok := connCustomer.Load(conn)
+		//[todo] maybe need to check if the customer is already logged in	
 		if ok {
 			_ = conn.WriteMessage(websocket.TextMessage, []byte("[error] Please logout first"))
 			return

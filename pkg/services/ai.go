@@ -40,8 +40,9 @@ type AiService struct {
    temperature float32
    maxTokens int
    timeout int
+   transport *http.Transport
 }
-var llmModel = "deepseek"
+var llmModel = "ai.deepseek"
 func GetAiService() *AiService {
     // Get API configuration
     return &AiService{
@@ -51,6 +52,13 @@ func GetAiService() *AiService {
         temperature: float32(viper.GetFloat64(llmModel + ".settings.temperature")),
         maxTokens: viper.GetInt(llmModel + ".settings.max_tokens"),
         timeout: viper.GetInt(llmModel + ".timeout"),
+        transport: &http.Transport{
+            MaxIdleConns:        viper.GetInt(llmModel + ".http_client.max_idle_conns"),              // Maximum number of idle connections
+            MaxIdleConnsPerHost: viper.GetInt(llmModel + ".http_client.max_idle_conns_per_host"),              // Maximum idle connections per host
+            IdleConnTimeout:     time.Duration(viper.GetInt(llmModel + ".http_client.idle_conn_timeout")) * time.Second, // How long to keep idle connections alive
+            TLSHandshakeTimeout: time.Duration(viper.GetInt(llmModel + ".http_client.tls_handshake_timeout")) * time.Second, // TLS handshake timeout
+            DisableCompression:  viper.GetBool(llmModel + ".http_client.disable_compression"),             // Disable compression for better performance
+        },
     }
 }
 func (ais *AiService) SentimentAnalysis(content string) string {
@@ -67,6 +75,7 @@ func (ais *AiService) SentimentAnalysis(content string) string {
     
     // set http client
     client := &http.Client{
+        Transport: ais.transport,
         Timeout: time.Duration(ais.timeout) * time.Second,
     }
 
@@ -143,8 +152,10 @@ func (ais *AiService) SentimentAnalysis(content string) string {
 func (ai *AiService) GenerateAIResponse(input string) string {
     // Get API configuration
 
+
     // Create HTTP client with timeout
     client := &http.Client{
+        Transport: ai.transport,
         Timeout: time.Duration(ai.timeout) * time.Second,
     }
 

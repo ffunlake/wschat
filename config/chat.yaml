@@ -22,20 +22,27 @@ database:
   conn_max_lifetime: 3600 # 连接最大生命周期（秒）
 
 # DeepSeek API Configuration
-deepseek:
-  api_key: "${DEEPSEEK_API_KEY}"
-  api_url: "https://api.deepseek.com/v1/chat/completions"
-  model: "deepseek-chat"
-  settings:
-    # < 0.3 means more accurate
-    # > 0.3. < 0.7 means balanced
-    # > 0.7 means more creative
-    temperature: 0.5
-    # limit the ai response tokens
-    max_tokens: 150
-  headers:
-    content_type: "application/json"
-    accept: "application/json"
-  timeout: 30 # seconds
+ai:
+  deepseek:
+    api_key: "${DEEPSEEK_API_KEY}"
+    api_url: "https://api.deepseek.com/v1/chat/completions"
+    model: "deepseek-chat"
+    settings:
+      # < 0.3 means more accurate
+      # > 0.3. < 0.7 means balanced
+      # > 0.7 means more creative
+      temperature: 0.5
+      # limit the ai response tokens
+      max_tokens: 300
+    headers:
+      content_type: "application/json"
+      accept: "application/json"
+    timeout: 30 # seconds
+  http_client:
+    max_idle_conns: 100
+    max_idle_conns_per_host: 100
+    idle_conn_timeout: 90 # seconds
+    tls_handshake_timeout: 10 # seconds
+    disable_compression: true
 
 
